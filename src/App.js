@@ -9,8 +9,23 @@ function App() {
   useEffect(() => {
     if (loading) return;
     setFollowers(data[page]);
-    console.log("followers :", followers);
   }, [loading, page]);
+
+  const previousPage = () => {
+    setPage((oldPage) => {
+      let previousPage = oldPage - 1;
+      if (previousPage < 0) previousPage = data.length - 1;
+      return previousPage;
+    });
+  };
+
+  const nextPage = () => {
+    setPage((oldPage) => {
+      let nextPage = oldPage + 1;
+      if (nextPage > data.length - 1) nextPage = 0;
+      return nextPage;
+    });
+  };
 
   const handlePage = (index) => {
     setPage(index);
@@ -30,6 +45,10 @@ function App() {
         </div>
         {!loading && (
           <div className="btn-container">
+            <button className="prev-btn" onClick={previousPage}>
+              previous
+            </button>
+
             {data.map((item, index) => {
               return (
                 <button
@@ -40,6 +59,10 @@ function App() {
                 </button>
               );
             })}
+
+            <button className="prev-btn" onClick={nextPage}>
+              next
+            </button>
           </div>
         )}
       </section>
